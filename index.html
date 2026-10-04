@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BOT PANEL QUEEN</title>
+<meta name="description" content="Daily market levels and setups. Free to join.">
+<meta property="og:title" content="BOT PANEL QUEEN">
+<meta property="og:description" content="Daily market levels and setups. Free to join.">
+<meta property="og:image" content="queen.jpg">
+<meta name="theme-color" content="#0b0406">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  /* ── iPhone Burgundy palette ── */
+  --bg:#0b0406;
+  --bg2:#140609;
+  --panel:#1c0b10;
+  --panel2:#261016;
+  --ink:#f8eef1;
+  --muted:#ab8b94;
+  --line:#3a1a22;
+  --accent:#c81242;
+  --accent2:#f2b8c6;
+  --accent3:#7d0a24;
+  --glow:rgba(200,18,66,.45);
+  --glow2:rgba(242,184,198,.35);
+}
+html,body{background:var(--bg)}
+body{
+  font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--ink);min-height:100dvh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:36px 18px;position:relative;overflow-x:hidden;
+}
+
+.bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-glow::before,.bg-glow::after{
+  content:'';position:absolute;width:60vmax;height:60vmax;border-radius:50%;
+  filter:blur(90px);opacity:.42}
+.bg-glow::before{background:radial-gradient(circle,var(--accent),transparent 70%);
+  top:-20vmax;right:-20vmax;animation:drift1 18s ease-in-out infinite}
+.bg-glow::after{background:radial-gradient(circle,#5a0718,transparent 70%);
+  bottom:-25vmax;left:-20vmax;opacity:.34;animation:drift2 22s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-6%,4%) scale(1.08)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(5%,-5%) scale(1.06)}}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+.wrap{width:100%;max-width:440px;display:flex;flex-direction:column;gap:16px;position:relative;z-index:2}
+
+.card{
+  position:relative;background:linear-gradient(180deg,var(--panel),var(--bg2));
+  border:1px solid var(--line);border-radius:22px;overflow:hidden;
+  padding:30px 26px 26px;
+  box-shadow:0 30px 70px -20px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.02) inset,
+             0 0 60px -30px var(--glow);
+  animation:cardIn .8s cubic-bezier(.16,1,.3,1) both;
+  transform-style:preserve-3d;transition:transform .3s ease}
+@keyframes cardIn{from{opacity:0;transform:translateY(28px) scale(.96);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
+.card::before{
+  content:'';position:absolute;top:-1px;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent2),transparent);opacity:.7;z-index:2}
+.card::after{
+  content:'';position:absolute;inset:0;border-radius:22px;padding:1.5px;pointer-events:none;z-index:1;
+  background:conic-gradient(from var(--ang,0deg),transparent 0%,var(--accent) 12%,transparent 24%,transparent 76%,var(--accent2) 88%,transparent 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  animation:borderSpin 5s linear infinite;opacity:.6}
+@keyframes borderSpin{to{--ang:360deg}}
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+
+.top-row{display:flex;align-items:center;justify-content:center;margin-bottom:6px;
+  animation:fadeIn .6s ease .1s both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:500;
+  color:var(--muted);display:flex;align-items:center;gap:7px;
+  letter-spacing:.06em;text-transform:uppercase}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);
+  animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 var(--glow)}
+  70%{box-shadow:0 0 0 7px transparent}
+  100%{box-shadow:0 0 0 0 transparent}}
+
+/* ── hero avatar block ── */
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;
+  margin:14px 0 22px;animation:fadeIn .6s ease .16s both}
+
+.avatar-stage{position:relative;width:104px;height:104px;margin-bottom:16px;
+  display:flex;align-items:center;justify-content:center;
+  animation:float 4.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+.orbit{position:absolute;inset:-16px;border-radius:50%;pointer-events:none;
+  animation:spin 9s linear infinite}
+.orbit i{position:absolute;top:0;left:50%;width:5px;height:5px;border-radius:50%;
+  background:var(--accent2);box-shadow:0 0 8px 1px var(--glow2);margin-left:-2.5px}
+.orbit.o2{animation-duration:13s;animation-direction:reverse;inset:-26px}
+.orbit.o2 i{background:#ffd9e1;box-shadow:0 0 8px 1px rgba(255,217,225,.5);width:4px;height:4px;margin-left:-2px}
+
+.avatar-ring{position:absolute;inset:-7px;border-radius:50%;
+  background:conic-gradient(from 0deg,var(--accent),var(--accent2),var(--accent3),var(--accent));
+  animation:spin 6s linear infinite;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px))}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.avatar-halo{position:absolute;inset:-18px;border-radius:50%;
+  background:radial-gradient(circle,var(--glow),transparent 70%);
+  opacity:.8;animation:halo 2.6s ease-in-out infinite}
+@keyframes halo{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.9;transform:scale(1.12)}}
+
+.avatar{
+  position:relative;width:88px;height:88px;border-radius:50%;
+  background:#222222 center/cover no-repeat;border:3px solid var(--bg2);
+  box-shadow:0 8px 24px -6px rgba(0,0,0,.65),0 0 0 1px rgba(200,18,66,.25);z-index:1}
+
+.avatar-badge{
+  position:absolute;bottom:1px;right:1px;z-index:2;width:26px;height:26px;
+  border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent3));
+  border:3px solid var(--bg2);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px -4px var(--glow);
+  animation:pop .5s cubic-bezier(.2,1.4,.4,1) .5s both}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+.avatar-badge svg{width:13px;height:13px;color:#fff}
+
+.name{font-weight:700;font-size:20px;line-height:1.2;letter-spacing:-.2px;
+  display:flex;align-items:center;gap:6px;justify-content:center}
+
+/* ── description — this is the ONLY place it shows ── */
+.subline{font-size:12.5px;color:var(--muted);margin-top:6px;max-width:300px}
+
+.badge{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+  letter-spacing:.05em;color:var(--accent2);border:1px solid rgba(242,184,198,.32);
+  background:rgba(200,18,66,.12);padding:5px 10px;border-radius:100px;
+  display:inline-flex;align-items:center;gap:5px;margin-top:12px}
+
+/* ── CTA button — size locked, no growth on tap ── */
+.cta{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;height:56px;
+  position:relative;overflow:hidden;cursor:pointer;text-decoration:none;
+  background:linear-gradient(135deg,#e01e4a,var(--accent3));color:#ffffff;
+  border-radius:13px;
+  font-weight:700;font-size:15.5px;letter-spacing:.1px;
+  box-shadow:0 12px 30px -8px rgba(200,18,66,.65),0 1px 0 rgba(255,255,255,.18) inset;
+  transition:transform .15s cubic-bezier(.2,.8,.3,1.3),box-shadow .2s ease,filter .2s ease;
+  animation:fadeIn .6s ease .3s both, ctaGlow 2.6s ease-in-out 1.2s infinite;
+  -webkit-appearance:none;appearance:none;border:none;outline:none;
+  transform-origin:center center;
+  touch-action:manipulation;
+  -webkit-user-select:none;user-select:none;
+  will-change:transform}
+@keyframes ctaGlow{
+  0%,100%{box-shadow:0 12px 30px -8px rgba(200,18,66,.65),0 1px 0 rgba(255,255,255,.18) inset}
+  50%{box-shadow:0 12px 38px -6px rgba(224,30,74,.85),0 1px 0 rgba(255,255,255,.18) inset}}
+.cta::before{
+  content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.42),transparent);
+  transform:skewX(-20deg);animation:sheen 3.2s ease-in-out 1s infinite;
+  pointer-events:none}
+@keyframes sheen{0%{left:-60%}45%,100%{left:130%}}
+.cta:hover{transform:translateY(-2px);filter:brightness(1.07)}
+.cta:active{transform:scale(.97)}
+.cta:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
+.cta.busy{opacity:.7;pointer-events:none;animation:none}
+.cta .arrow{transition:transform .2s ease;position:relative;z-index:1}
+.cta:hover .arrow{transform:translateX(4px)}
+.cta .tg-icon{width:19px;height:19px;flex:0 0 auto;position:relative;z-index:1}
+.cta span{position:relative;z-index:1}
+
+/* ── stats bar (right below button) ── */
+.stats-row{display:flex;gap:9px;margin-top:16px;animation:fadeIn .6s ease .4s both}
+.stat{
+  flex:1;text-align:center;padding:11px 6px;border-radius:12px;
+  background:linear-gradient(180deg,var(--panel2),rgba(28,11,16,.55));
+  border:1px solid var(--line);
+  transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease}
+.stat:hover{
+  transform:translateY(-2px);
+  border-color:rgba(224,30,74,.42);
+  background:#2b1219;
+  box-shadow:0 10px 22px -12px var(--glow)}
+.stat b{display:block;font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.2px}
+.stat span{display:block;font-size:9.5px;color:var(--muted);margin-top:3px;
+  text-transform:uppercase;letter-spacing:.07em}
+
+.status-row{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.02em;color:var(--muted);
+  animation:fadeIn .6s ease .44s both}
+.status-row b{color:var(--accent2);font-weight:600}
+
+/* ── reviews ── */
+.reviews{margin-top:22px;display:flex;flex-direction:column;gap:9px}
+.reviews-head{display:flex;align-items:center;justify-content:center;gap:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:3px;
+  animation:fadeIn .6s ease .52s both}
+.reviews-head .stars{color:var(--accent2);letter-spacing:2px;font-size:12px;
+  text-shadow:0 0 10px var(--glow2)}
+.reviews-head b{color:var(--ink);font-weight:600}
+
+.review{
+  display:flex;gap:11px;align-items:flex-start;
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012));
+  border:1px solid var(--line);border-radius:14px;padding:12px 13px;
+  animation:fadeIn .6s ease both;
+  transition:transform .25s ease,border-color .25s ease,background .25s ease}
+.review:nth-child(2){animation-delay:.56s}
+.review:nth-child(3){animation-delay:.62s}
+.review:nth-child(4){animation-delay:.68s}
+.review:nth-child(5){animation-delay:.74s}
+.review:hover{transform:translateY(-2px);border-color:rgba(224,30,74,.38);
+  background:rgba(255,255,255,.055)}
+
+.review .rav{flex:0 0 auto;width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;color:#fff;letter-spacing:.02em;
+  box-shadow:0 5px 14px -5px rgba(0,0,0,.75),0 1px 0 rgba(255,255,255,.18) inset}
+.review .rbody{flex:1;min-width:0}
+.review .rtop{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.review .rname{font-size:13px;font-weight:600;letter-spacing:-.1px;color:var(--ink)}
+.review .rstars{font-size:10px;color:var(--accent2);letter-spacing:1.5px;flex:0 0 auto}
+.review .rtext{font-size:12px;color:var(--muted);line-height:1.48;margin-top:3px}
+.review .rprofit{
+  display:inline-block;margin-top:6px;
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+  letter-spacing:.04em;color:var(--accent2);
+  border:1px solid rgba(242,184,198,.28);background:rgba(200,18,66,.14);
+  padding:3px 8px;border-radius:100px}
+
+@media (max-width:380px){
+  .card{padding:24px 20px 22px;border-radius:20px}
+  .stat b{font-size:14px}
+  .stat span{font-size:9px}
+}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="wrap">
+  <main class="card" id="card">
+    <div class="top-row">
+      <p class="eyebrow"><span class="dot"></span> DAILY MARKET LEVELS</p>
+    </div>
+
+    <div class="hero">
+      <div class="avatar-stage">
+        <div class="avatar-halo" aria-hidden="true"></div>
+        <div class="orbit o1" aria-hidden="true"><i></i></div>
+        <div class="orbit o2" aria-hidden="true"><i></i></div>
+        <div class="avatar-ring" aria-hidden="true"></div>
+        <div class="avatar" style="background-image:url('queen.jpg')"
+             role="img" aria-label="BOT PANEL QUEEN"></div>
+        <div class="avatar-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <span class="name">BOT PANEL QUEEN</span>
+      <span class="subline">Daily market levels and setups. Free to join.</span>
+      <span class="badge">★ VERIFIED CHANNEL</span>
+    </div>
+
+    <a class="cta" id="joinBtn" href="https://t.me/+ZVPs8YtEluQxNWRl" target="_blank" rel="noopener">
+      <svg class="tg-icon" viewBox="0 0 240 240" aria-hidden="true">
+        <path d="M100.4 155.3l-4.3 60.6c6.1 0 8.8-2.6 12-5.8l28.8-27.6 59.7 43.7c11 6.1 18.8 2.9 21.7-10.1L259 47.8c3.9-16.2-5.9-22.5-16.5-18.6L11.2 116.8c-15.8 6.2-15.6 15-2.7 19l59 18.4L204 60c6.1-4 11.7-1.8 7.1 2.2L100.4 155.3z" fill="currentColor"/>
+      </svg>
+      <span>Join Now</span> <span class="arrow" aria-hidden="true">&#8594;</span>
+    </a>
+
+    <!-- ── STATS BAR (right after button) ── -->
+    <div class="stats-row" aria-hidden="true">
+      <div class="stat"><b>25K+</b><span>Members</span></div>
+      <div class="stat"><b>Free</b><span>To Join</span></div>
+      <div class="stat"><b>100%</b><span>Safe</span></div>
+    </div>
+
+    <p class="status-row">Status: <b id="statusText">Ready</b> · opens in Telegram</p>
+
+    <!-- ── reviews (fully static, Indian names) ── -->
+    <section class="reviews" aria-label="Member reviews">
+      <div class="reviews-head">
+        <span class="stars">★★★★★</span>
+        <span><b>4.9</b> · 25,000+ members</span>
+      </div>
+
+      <article class="review">
+        <span class="rav" style="background:linear-gradient(135deg,#e01e4a,#7d0a24)">A</span>
+        <div class="rbody">
+          <div class="rtop">
+            <span class="rname">Arjun Mehta</span>
+            <span class="rstars">★★★★★</span>
+          </div>
+          <p class="rtext">Hands down the best TG channel I've followed. Clean setups, zero noise.</p>
+          <span class="rprofit">+$4,200 this month</span>
+        </div>
+      </article>
+
+      <article class="review">
+        <span class="rav" style="background:linear-gradient(135deg,#8f0a2a,#3d0512)">P</span>
+        <div class="rbody">
+          <div class="rtop">
+            <span class="rname">Priya Sharma</span>
+            <span class="rstars">★★★★★</span>
+          </div>
+          <p class="rtext">Best channel period. The daily levels are pure gold — copied them and won.</p>
+          <span class="rprofit">+68% account in 6 weeks</span>
+        </div>
+      </article>
+
+      <article class="review">
+        <span class="rav" style="background:linear-gradient(135deg,#c81242,#5a0718)">R</span>
+        <div class="rbody">
+          <div class="rtop">
+            <span class="rname">Rohan Gupta</span>
+            <span class="rstars">★★★★★</span>
+          </div>
+          <p class="rtext">Best of the best. No fluff, just profit. Woke up to London levels already posted.</p>
+          <span class="rprofit">+$1,850 this week</span>
+        </div>
+      </article>
+
+      <article class="review">
+        <span class="rav" style="background:linear-gradient(135deg,#a30f36,#4a0514)">S</span>
+        <div class="rbody">
+          <div class="rtop">
+            <span class="rname">Sneha Reddy</span>
+            <span class="rstars">★★★★★</span>
+          </div>
+          <p class="rtext">Free and still better than every paid group I've been in. Real profits daily.</p>
+          <span class="rprofit">+$3,100 in 3 weeks</span>
+        </div>
+      </article>
+    </section>
+  </main>
+</div>
+
+<script>
+// Simple interaction for the button (no server calls)
+const btn = document.getElementById('joinBtn');
+const statusText = document.getElementById('statusText');
+
+btn.addEventListener('click', function(e) {
+  // Let the default link work — just update status text for feedback
+  if (statusText) statusText.textContent = 'Opening…';
+  // The link will open in a new tab because of target="_blank"
+});
+
+// Card 3D tilt (desktop only)
+const card = document.getElementById('card');
+if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - .5;
+    const py = (e.clientY - r.top) / r.height - .5;
+    card.style.transform = `rotateY(${px*4}deg) rotateX(${py*-4}deg)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+}
+</script>
+</body>
+</html>
